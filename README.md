@@ -4,8 +4,6 @@
 
 Cole o projeto (texto ou PDF) no Claude, ChatGPT ou Gemini e rode **um prompt por vez**, substituindo `[ÁREA]` e `[TEMA]` pelos seus. Misturar os prompts dilui a análise.
 
-> 🔗 Versão com botão de copiar: *(adicione aqui o link da página publicada)*
-
 ---
 
 ## Prompt 1 — Arguição simulada
