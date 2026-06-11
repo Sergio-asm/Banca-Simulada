@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banca Simulada — Revisão Crítica do Projeto de Tese</title>
+<meta name="description" content="Revisão crítica do projeto de tese ou dissertação antes da qualificação: 5 prompts prontos para usar IA como banca simulada — arguição, alinhamento objetivo–método, afirmações sem sustentação, lacunas de literatura e pré-mortem. Com as ressalvas que ninguém publica.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF8;
+    --card:#FFFFFF;
+    --ink:#20242E;
+    --red:#A8322D;
+    --pencil:#76705F;
+    --highlight:#F7E96B;
+    --line:#E5E0D4;
+    --serif:"STIX Two Text", Georgia, "Times New Roman", serif;
+    --mono:"IBM Plex Mono", "Courier New", monospace;
+    --hand:"Caveat", "Segoe Script", cursive;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:1.06rem;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  main{max-width:680px;margin:0 auto;padding:0 1.25rem 4rem}
+
+  /* ---------- cabeçalho ---------- */
+  header{padding:3.25rem 0 2.25rem;position:relative}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--pencil);
+    margin-bottom:1.1rem;
+  }
+  h1{
+    font-size:clamp(2.1rem,7vw,3.1rem);
+    font-weight:700;
+    line-height:1.08;
+    letter-spacing:-.01em;
+    max-width:14ch;
+  }
+  .subtitle{
+    margin-top:.45rem;
+    font-size:1.05rem;
+    font-weight:600;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--red);
+  }
+  .lede{
+    margin-top:1.1rem;
+    font-size:1.13rem;
+    max-width:52ch;
+  }
+  .lede mark{
+    background:linear-gradient(transparent 35%, var(--highlight) 35%, var(--highlight) 92%, transparent 92%);
+    padding:0 .12em;
+  }
+  .hero-note{
+    font-family:var(--hand);
+    color:var(--red);
+    font-size:1.45rem;
+    transform:rotate(-3deg);
+    display:inline-block;
+    margin-top:1.3rem;
+  }
+
+  /* ---------- como usar ---------- */
+  .howto{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:1.4rem 0;
+    margin-bottom:3rem;
+    font-size:.98rem;
+  }
+  .howto p{max-width:60ch}
+  .howto strong{font-weight:600}
+
+  /* ---------- cartões de prompt ---------- */
+  .prompt-card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:1.75rem 1.5rem 1.5rem;
+    margin-bottom:3.4rem;
+    box-shadow:0 1px 2px rgba(32,36,46,.05);
+  }
+  .marginalia{
+    position:absolute;
+    top:-1.15rem;
+    right:.9rem;
+    font-family:var(--hand);
+    font-size:1.35rem;
+    font-weight:600;
+    color:var(--red);
+    transform:rotate(-2.5deg);
+    background:var(--paper);
+    padding:0 .4rem;
+    line-height:1.15;
+    max-width:65%;
+    text-align:right;
+  }
+  .prompt-head{
+    display:flex;
+    align-items:baseline;
+    gap:.75rem;
+    margin-bottom:.55rem;
+  }
+  .prompt-num{
+    font-family:var(--mono);
+    font-size:.8rem;
+    color:var(--pencil);
+    letter-spacing:.08em;
+    white-space:nowrap;
+  }
+  h2{font-size:1.32rem;font-weight:700;line-height:1.25}
+  .prompt-desc{
+    font-size:.97rem;
+    color:#4A4E59;
+    margin-bottom:1.15rem;
+    max-width:58ch;
+  }
+  .prompt-text{
+    font-family:var(--mono);
+    font-size:.86rem;
+    line-height:1.62;
+    background:#FAF8F2;
+    border:1px solid var(--line);
+    border-left:3px solid var(--ink);
+    border-radius:2px;
+    padding:1rem 1.1rem;
+    white-space:pre-wrap;
+    overflow-wrap:break-word;
+  }
+  .prompt-text b{
+    font-weight:500;
+    background:linear-gradient(transparent 20%, var(--highlight) 20%, var(--highlight) 95%, transparent 95%);
+  }
+  .copy-btn{
+    margin-top:1rem;
+    font-family:var(--mono);
+    font-size:.84rem;
+    font-weight:500;
+    letter-spacing:.03em;
+    color:var(--paper);
+    background:var(--ink);
+    border:1px solid var(--ink);
+    border-radius:3px;
+    padding:.6rem 1.15rem;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .copy-btn:hover{background:#3A3F4D}
+  .copy-btn:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+  .copy-btn.copied{background:var(--red);border-color:var(--red)}
+  .placeholder-hint{
+    margin-top:.7rem;
+    font-size:.85rem;
+    color:var(--pencil);
+    font-style:italic;
+  }
+
+  /* ---------- ressalvas ---------- */
+  .caveats{
+    border:1px solid var(--red);
+    border-radius:4px;
+    padding:1.75rem 1.5rem;
+    margin:3.5rem 0 0;
+    position:relative;
+    background:var(--card);
+  }
+  .caveats .marginalia{font-size:1.4rem}
+  .caveats h2{margin-bottom:.9rem}
+  .caveats p{margin-bottom:.9rem;max-width:60ch}
+  .caveats p:last-child{margin-bottom:0}
+  .caveats strong{font-weight:700}
+
+  /* ---------- rodapé ---------- */
+  footer{
+    margin-top:3.5rem;
+    padding-top:1.6rem;
+    border-top:1px solid var(--line);
+    font-size:.92rem;
+    color:#4A4E59;
+  }
+  footer p{margin-bottom:.8rem;max-width:62ch}
+  footer a{color:var(--ink);text-decoration-color:var(--red);text-underline-offset:3px}
+  footer a:hover{color:var(--red)}
+  footer a:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+  .license{font-family:var(--mono);font-size:.76rem;color:var(--pencil);margin-top:1.4rem}
+
+  /* feedback acessível do botão copiar */
+  .sr-only{
+    position:absolute;width:1px;height:1px;
+    padding:0;margin:-1px;overflow:hidden;
+    clip:rect(0,0,0,0);white-space:nowrap;border:0;
+  }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <p class="eyebrow">Ferramenta gratuita · zopyra.com.br</p>
+  <h1>Banca Simulada</h1>
+  <p class="subtitle">Revisão Crítica do Projeto de Tese</p>
+  <p class="lede">Seu projeto está pronto para a qualificação? Estes <mark>5 prompts</mark> usam a IA como uma banca simulada para encontrar lacunas <em>antes</em> que os examinadores encontrem. Cole o projeto no Claude, ChatGPT ou Gemini e rode um prompt por vez.</p>
+  <span class="hero-note">— revisar antes que a banca revise.</span>
+</header>
+
+<section class="howto" aria-label="Como usar">
+  <p><strong>Como usar:</strong> anexe o PDF do projeto (ou cole o texto) na conversa com a IA. Copie um prompt, substitua os trechos <em>destacados em amarelo</em> pela sua área e seu tema, e envie. Termine um prompt antes de passar ao próximo — misturá-los dilui a análise.</p>
+</section>
+
+<!-- ============ PROMPT 1 ============ -->
+<article class="prompt-card">
+  <span class="marginalia" aria-hidden="true">as 10 perguntas que a banca faria</span>
+  <div class="prompt-head">
+    <span class="prompt-num">PROMPT 1</span>
+    <h2>Arguição simulada</h2>
+  </div>
+  <p class="prompt-desc">Separa a leitura em duas etapas — primeiro a IA entende o projeto, depois o ataca como examinadora. A exigência do trecho exato é o que impede crítica genérica.</p>
+  <div class="prompt-text" id="prompt-1">Atue em duas etapas separadas. Não misture as etapas.
+
+ETAPA 1 — LEITURA: resuma os pontos centrais deste projeto de tese (problema, objetivos, hipóteses, método).
+
+ETAPA 2 — ARGUIÇÃO: agora ignore que foi você quem escreveu o resumo e atue como um examinador rigoroso da área de <b>[ÁREA]</b> em uma banca de qualificação. Formule as 10 perguntas mais difíceis que você faria na arguição. Para cada pergunta, indique o trecho exato do projeto onde a fragilidade aparece. Não suavize.</div>
+  <button class="copy-btn" data-target="prompt-1">Copiar prompt</button>
+  <p class="placeholder-hint">Substitua [ÁREA] pela sua área de pesquisa.</p>
+</article>
+
+<!-- ============ PROMPT 2 ============ -->
+<article class="prompt-card">
+  <span class="marginalia" aria-hidden="true">pega objetivos órfãos</span>
+  <div class="prompt-head">
+    <span class="prompt-num">PROMPT 2</span>
+    <h2>Alinhamento interno</h2>
+  </div>
+  <p class="prompt-desc">A inconsistência mais comum em projetos de qualificação: objetivos que nenhum procedimento responde, e procedimentos que não servem a objetivo nenhum.</p>
+  <div class="prompt-text" id="prompt-2">Verifique a coerência interna deste projeto entre problema de pesquisa, objetivos, hipóteses e metodologia.
+
+1. Para cada objetivo específico, indique qual procedimento metodológico o responde, citando o trecho.
+2. Liste os objetivos órfãos: objetivos sem procedimento metodológico correspondente.
+3. Liste os métodos órfãos: procedimentos descritos que não respondem a nenhum objetivo declarado.
+4. Verifique se as hipóteses são testáveis pelos métodos propostos.</div>
+  <button class="copy-btn" data-target="prompt-2">Copiar prompt</button>
+</article>
+
+<!-- ============ PROMPT 3 ============ -->
+<article class="prompt-card">
+  <span class="marginalia" aria-hidden="true">onde falta citação</span>
+  <div class="prompt-head">
+    <span class="prompt-num">PROMPT 3</span>
+    <h2>Afirmações sem lastro</h2>
+  </div>
+  <p class="prompt-desc">Classifica cada afirmação do projeto pelo grau de sustentação que ela tem <em>no próprio texto</em> — e mostra exatamente o que a banca pode contestar.</p>
+  <div class="prompt-text" id="prompt-3">Identifique as afirmações centrais deste projeto e classifique cada uma em:
+
+CLASSE A — sustentada no próprio texto por citação, dado ou justificativa explícita.
+CLASSE B — sustentação parcial: a fonte existe, mas o vínculo com a afirmação é frágil ou indireto.
+CLASSE C — afirmada sem sustentação alguma, ou apoiada em premissa implícita.
+
+Para cada item da CLASSE C, indique: (a) o trecho exato, (b) o que a banca poderia contestar, (c) que tipo de sustentação resolveria o problema.</div>
+  <button class="copy-btn" data-target="prompt-3">Copiar prompt</button>
+</article>
+
+<!-- ============ PROMPT 4 ============ -->
+<article class="prompt-card">
+  <span class="marginalia" aria-hidden="true">cuidado: é aqui que a IA inventa</span>
+  <div class="prompt-head">
+    <span class="prompt-num">PROMPT 4</span>
+    <h2>Lacunas de literatura</h2>
+  </div>
+  <p class="prompt-desc">Útil e perigoso na mesma medida. A IA é boa em apontar debates ausentes — e é exatamente aqui que ela mais inventa referências. Leia a ressalva no fim da página antes de usar qualquer sugestão.</p>
+  <div class="prompt-text" id="prompt-4">Analise a fundamentação teórica deste projeto sobre <b>[TEMA]</b>.
+
+Quais autores, obras ou debates centrais da área estão ausentes ou subrepresentados? Aponte apenas ausências que um especialista da área notaria — não liste autores tangenciais para preencher a resposta.
+
+Para cada ausência apontada, declare seu nível de confiança de que a referência existe e é central ao tema (alto / médio / baixo) e o que eu deveria verificar antes de citá-la.</div>
+  <button class="copy-btn" data-target="prompt-4">Copiar prompt</button>
+  <p class="placeholder-hint">Substitua [TEMA] pelo tema da sua pesquisa. Verifique toda referência sugerida no Google Scholar antes de citar.</p>
+</article>
+
+<!-- ============ PROMPT 5 ============ -->
+<article class="prompt-card">
+  <span class="marginalia" aria-hidden="true">e se a banca reprovar?</span>
+  <div class="prompt-head">
+    <span class="prompt-num">PROMPT 5</span>
+    <h2>Pré-mortem de viabilidade</h2>
+  </div>
+  <p class="prompt-desc">Em vez de perguntar "o que pode dar errado?", declara que já deu errado — e pede a autópsia. A IA é muito melhor explicando falhas do que prevendo riscos.</p>
+  <div class="prompt-text" id="prompt-5">Avance 6 meses no futuro. Assuma como FATO ABSOLUTO que a banca de qualificação reprovou este projeto por inviabilidade. Não questione SE foi reprovado — a reprovação já aconteceu.
+
+Escreva o relatório de autópsia:
+1. Causa principal: qual premissa do cronograma, da amostra/corpus ou do método se provou falsa?
+2. Ponto cego: que variável externa, ignorada no projeto, contribuiu para a reprovação?
+3. Ajuste: reescreva apenas a parte inviável, mitigando especificamente esses riscos.</div>
+  <button class="copy-btn" data-target="prompt-5">Copiar prompt</button>
+</article>
+
+<!-- ============ RESSALVAS ============ -->
+<section class="caveats" aria-labelledby="caveats-title">
+  <span class="marginalia" aria-hidden="true">leia isto antes de confiar</span>
+  <h2 id="caveats-title">Três ressalvas que ninguém publica junto com os prompts</h2>
+  <p><strong>1. Crítica sem trecho citado costuma ser crítica inventada.</strong> Modelos de linguagem preenchem o formato pedido mesmo quando não têm o que dizer. Por isso todos os prompts acima exigem o trecho exato — se a IA apontar uma fragilidade sem localizá-la no seu texto, desconfie.</p>
+  <p><strong>2. Referências sugeridas pela IA podem não existir.</strong> O prompt 4 é onde os modelos mais alucinam: eles inventam autores, títulos e anos com fluência perfeita. Confirme cada sugestão no Google Scholar ou na base da sua área antes de citar qualquer coisa.</p>
+  <p><strong>3. Isto não substitui seu orientador.</strong> Estes prompts encontram lacunas formais — alinhamento, sustentação, viabilidade. Eles não sabem o que a sua banca específica valoriza, nem as disputas internas do seu programa. Use a IA para chegar mais preparado à conversa humana, não para substituí-la.</p>
+</section>
+
+<footer>
+  <p>Os prompts 1, 3 e 5 adaptam as técnicas <em>Ator-Observador</em>, <em>Granularidade Calibrada</em> e <em>Pré-Mortem Cognitivo</em> do livro <strong><a href="https://www.amazon.com.br/CONFI%C3%81VEL-DEFINITIVO-IDENTIFICAR-Fundamentos-Metacognitiva-ebook/dp/B0GN9KLHXG" rel="author">IA Confiável</a></strong>, de Sérgio Camargos (Edições Zopyra, 2026 — <a href="https://www.amazon.com.br/CONFI%C3%81VEL-DEFINITIVO-IDENTIFICAR-Fundamentos-Metacognitiva-ebook/dp/B0GN9KLHXG">disponível na Amazon</a>) — um método completo para extrair de qualquer IA não só respostas, mas os sinais de confiabilidade dessas respostas.</p>
+  <p>Mais ferramentas em <a href="https://zopyra.com.br" rel="author">zopyra.com.br</a>.</p>
+  <!-- URL original completa da Amazon (com parâmetros de rastreamento), caso a versão limpa acima não resolva:
+  https://www.amazon.com.br/CONFIÁVEL-DEFINITIVO-IDENTIFICAR-Fundamentos-Metacognitiva-ebook/dp/B0GN9KLHXG/ref=sr_1_1?__mk_pt_BR=ÅMÅŽÕÑ&crid=4B7JFYREHT10&dib=eyJ2IjoiMSJ9.M_zrTmFvNPaxXO5LWQd8D8z9sIGv7L7AjLlZXuFKtyB9GvexINiUheQ172A3ZUtOaAarudzw9EqtMQg9UyUl6-uRZDATwK24DtV5Py6QLW0c-Y_xtdGlRP2kl-oYnL4D.uX2-zAqXuaFFHez4UYpwNQLDQpvix6sbdloR2jB_LrY&dib_tag=se&keywords=ia+confiavel&qid=1781179088&sprefix=ia+confiavel%2Caps%2C288&sr=8-1 -->
+  <!-- Adicione aqui o link do repositório no GitHub:
+  <p><a href="LINK_REPO">Código e versões deste material no GitHub</a></p> -->
+  <p class="license">Este material está licenciado sob <a href="https://creativecommons.org/licenses/by/4.0/deed.pt-br">CC BY 4.0</a> — compartilhe e adapte livremente, com atribuição a Sérgio Camargos / zopyra.com.br.</p>
+</footer>
+
+</main>
+
+<div class="sr-only" role="status" aria-live="polite" id="copy-status"></div>
+
+<script>
+(function(){
+  var status = document.getElementById('copy-status');
+
+  function legacyCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.position = 'absolute';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function markCopied(btn){
+    var original = btn.textContent;
+    btn.textContent = 'Copiado \u2713';
+    btn.classList.add('copied');
+    status.textContent = 'Prompt copiado para a \u00e1rea de transfer\u00eancia.';
+    setTimeout(function(){
+      btn.textContent = original;
+      btn.classList.remove('copied');
+      status.textContent = '';
+    }, 2200);
+  }
+
+  function markFailed(btn){
+    btn.textContent = 'Selecione e copie manualmente';
+    status.textContent = 'N\u00e3o foi poss\u00edvel copiar automaticamente. Selecione o texto e copie manualmente.';
+    setTimeout(function(){
+      btn.textContent = 'Copiar prompt';
+      status.textContent = '';
+    }, 3500);
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var el = document.getElementById(btn.getAttribute('data-target'));
+      var text = el.innerText;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function(){ markCopied(btn); },
+          function(){ legacyCopy(text) ? markCopied(btn) : markFailed(btn); }
+        );
+      } else {
+        legacyCopy(text) ? markCopied(btn) : markFailed(btn);
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
